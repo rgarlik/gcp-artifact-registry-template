@@ -35,7 +35,7 @@ jobs:
       # This deploys under 2 tags. One is `latest` and the other one is the last commit's SHA
       - name: ☁️ Deploy to GCP Artifact Registry
         run: |-
-          docker tag ${{ vars.IMAGE_NAME }}:latest ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_NAME }}/images/${{ vars.IMAGE_NAME }}:latest
-          docker tag ${{ vars.IMAGE_NAME }}:latest ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_NAME }}/images/${{ vars.IMAGE_NAME }}:${{ github.sha }}
-          docker push ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_NAME }}/images/${{ vars.IMAGE_NAME }}:latest
-          docker push ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_NAME }}/images/${{ vars.IMAGE_NAME }}:${{ github.sha }}
+          docker tag ${{ vars.IMAGE_NAME }}:latest ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_NAME }}/${{ vars.REPOSITORY }}/${{ vars.IMAGE_NAME }}:latest
+          docker tag ${{ vars.IMAGE_NAME }}:latest ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_NAME }}/${{ vars.REPOSITORY }}/${{ vars.IMAGE_NAME }}:${{ github.sha }}
+          docker push ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_NAME }}/${{ vars.REPOSITORY }}/${{ vars.IMAGE_NAME }}:latest
+          docker push ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_NAME }}/${{ vars.REPOSITORY }}/${{ vars.IMAGE_NAME }}:${{ github.sha }}
