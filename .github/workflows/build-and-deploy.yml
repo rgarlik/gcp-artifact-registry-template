@@ -7,12 +7,6 @@ on:
   pull_request:
     branches: ["main"]
 
-env:
-  PROJECT_NAME: your-project-name
-  IMAGE_NAME: your-image-name
-  REGION: gcp-region
-  REPOSITORY: your-artifact-repository
-
 jobs:
   deploy:
     name: 🛠️ Build & Deploy

@@ -16,7 +16,7 @@ Do the following in your Google Cloud project for this GitHub Action to work:
 
 ## Configuration
 
-The following [environmental variables](https://docs.github.com/en/actions/learn-github-actions/variables) need to be configured either through GitHub's settings page or by overriding them in the YAML file (not recommended).
+The following [environmental variables](https://docs.github.com/en/actions/learn-github-actions/variables) need to be configured either through GitHub's settings page or by setting them in the YAML file (not recommended).
 
 | Variable       | Description                                                                                                 |
 | -------------- | ----------------------------------------------------------------------------------------------------------- |
