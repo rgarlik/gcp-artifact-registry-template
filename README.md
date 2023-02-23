@@ -1,4 +1,4 @@
-# GCP Artifact Registry Tempalte
+# GCP Artifact Registry Template
 
 This project contains a [GitHub Action](https://github.com/features/actions) that builds a [Docker](https://www.docker.com/) image and deploys it to [Google Cloud](https://cloud.google.com/)'s [Artifact Registry](https://cloud.google.com/artifact-registry).
 
