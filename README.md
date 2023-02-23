@@ -22,8 +22,8 @@ The following [environmental variables](https://docs.github.com/en/actions/learn
 | -------------- | ----------------------------------------------------------------------------------------------------------- |
 | `PROJECT_NAME` | Your Google Cloud [project name](https://cloud.google.com/resource-manager/docs/creating-managing-projects) |
 | `IMAGE_NAME`   | Your Docker image name (used both locally and in the registry)                                              |
-| `REGION`       | Your Google Cloud [region](https://cloud.google.com/compute/docs/regions-zones)                             |
 | `REPOSITORY`   | Your Artifact Registry [repository](https://cloud.google.com/artifact-registry/docs/repositories)           |
+| `REGION`       | The [region](https://cloud.google.com/compute/docs/regions-zones) of the repository                         |
 
 The following [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) are used by the action, mostly to authenticate through `google-github-actions/auth`. Secrets can only be added through the settings page. This workflow uses the `credentials_json` method of authentication which is **less secure** than `workload_identity_provider` (though it's easier to set up). If you'd rather use Indentity providers, check out the commented out section in the YAML file or read about the alternative method [here](https://github.com/google-github-actions/auth).
 
