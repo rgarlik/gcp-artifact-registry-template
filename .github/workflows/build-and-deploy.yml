@@ -27,15 +27,15 @@ jobs:
           # service_account: 'my-service-account@my-project.iam.gserviceaccount.com'
 
       - name: 🐋 Build Docker image
-        run: docker build -t ${{ env.IMAGE_NAME }}:latest .
+        run: docker build -t ${{ vars.IMAGE_NAME }}:latest .
 
       - name: 🐋 Configure Docker for pushing
-        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+        run: gcloud auth configure-docker ${{ vars.REGION }}-docker.pkg.dev
 
       # This deploys under 2 tags. One is `latest` and the other one is the last commit's SHA
       - name: ☁️ Deploy to GCP Artifact Registry
         run: |-
-          docker tag ${{ env.IMAGE_NAME }}:latest ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_NAME }}/images/${{ env.IMAGE_NAME }}:latest
-          docker tag ${{ env.IMAGE_NAME }}:latest ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_NAME }}/images/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_NAME }}/images/${{ env.IMAGE_NAME }}:latest
-          docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_NAME }}/images/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          docker tag ${{ vars.IMAGE_NAME }}:latest ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_NAME }}/images/${{ vars.IMAGE_NAME }}:latest
+          docker tag ${{ vars.IMAGE_NAME }}:latest ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_NAME }}/images/${{ vars.IMAGE_NAME }}:${{ github.sha }}
+          docker push ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_NAME }}/images/${{ vars.IMAGE_NAME }}:latest
+          docker push ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_NAME }}/images/${{ vars.IMAGE_NAME }}:${{ github.sha }}
