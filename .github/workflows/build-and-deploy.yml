@@ -1,0 +1,47 @@
+# Builds the Docker image and then deploys it to Google Cloud's Artifact Registry
+name: 🛠️ Build & Deploy
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+env:
+  PROJECT_NAME: your-project-name
+  IMAGE_NAME: your-image-name
+  REGION: gcp-region
+  REPOSITORY: your-artifact-repository
+
+jobs:
+  deploy:
+    name: 🛠️ Build & Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: 'actions/checkout@v3'
+        name: 🔽 Checkout
+      
+      - uses: 'google-github-actions/auth@v1'
+        name: 🔑 Google Cloud Auth
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+          # Read up on how the `auth` actions works: https://github.com/google-github-actions/auth
+          # If you'd rather use identity providers,
+          # comment out the `credentials_json` bit and uncomment the following:
+          
+          # workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+          # service_account: 'my-service-account@my-project.iam.gserviceaccount.com'
+
+      - name: 🐋 Build Docker image
+        run: docker build -t ${{ env.IMAGE_NAME }}:latest .
+
+      - name: 🐋 Configure Docker for pushing
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+
+      # This deploys under 2 tags. One is `latest` and the other one is the last commit's SHA
+      - name: ☁️ Deploy to GCP Artifact Registry
+        run: |-
+          docker tag ${{ env.IMAGE_NAME }}:latest ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_NAME }}/images/${{ env.IMAGE_NAME }}:latest
+          docker tag ${{ env.IMAGE_NAME }}:latest ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_NAME }}/images/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_NAME }}/images/${{ env.IMAGE_NAME }}:latest
+          docker push ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_NAME }}/images/${{ env.IMAGE_NAME }}:${{ github.sha }}
